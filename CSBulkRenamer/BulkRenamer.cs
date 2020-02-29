@@ -7,10 +7,17 @@ using System.Threading.Tasks;
 
 namespace CSBulkRenamer
 {
+    /// <summary>
+    /// Allows You to bulk rename files using a temporary txt file
+    /// </summary>
     class BulkRenamer
     {
-
-        public static void CreateTempFile(string directoryPath, string tempFilePath)
+        /// <summary>
+        /// Creates a temporary <c>files.txt</c> file
+        /// </summary>
+        /// <param name="tempFilePath">String of the path where you want to create temp file</param>
+        /// <param name="directoryPath">String of the directory where you are reading in filenames from</param>
+        public static void CreateTempFile(string tempFilePath, string directoryPath)
         {
             string[] files_in_path = Directory.GetFiles(directoryPath);
             StringBuilder files_as_string = new StringBuilder();
@@ -19,17 +26,21 @@ namespace CSBulkRenamer
                 files_as_string.AppendLine(file);
             }
 
-            //using (FileStream fs = File.Create("C:\\Users\\Shahr\\Desktop\\files.txt"))
+
             using (FileStream fs = File.Create(tempFilePath))
             {
                 byte[] files_as_bytes = new UTF8Encoding(true).GetBytes(files_as_string.ToString());
                 fs.Write(files_as_bytes, 0, files_as_bytes.Length);
             }
         }
-
-        public static void BulkRename(string tempFile, string directoryPath)
+        /// <summary>
+        /// Renames files in <c>directoryPath</c> with the file names is <c>tempFilePath</c> 
+        /// </summary>
+        /// <param name="tempFilePath">String of the path where created temp file</param>
+        /// <param name="directoryPath">String of the directory where you are reading in filenames from</param>
+        public static void BulkRename(string tempFilePath, string directoryPath)
         {
-            using(StreamReader sr = File.OpenText(tempFile))
+            using(StreamReader sr = File.OpenText(tempFilePath))
             {
                 string[] files_in_path = Directory.GetFiles(directoryPath);
                 for (int i = 0; i < files_in_path.Length; i++)

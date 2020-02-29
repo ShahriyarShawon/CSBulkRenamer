@@ -13,7 +13,7 @@ namespace CSBulkRenamer
     {
         public class Options
         {
-            [Option('c', "command", Required = false, HelpText = "Which Command you want to run", Default = "createTempFile")]
+            [Option('c', "command", Required = false, HelpText = "Which Command you want to run [createTempFile | rename]", Default = "createTempFile")]
             public string Command { get; set; }
 
             [Option('t', "tempFile", Required = false, HelpText = "Path to where your files.txt file is", Default = "files.txt")]
@@ -32,7 +32,7 @@ namespace CSBulkRenamer
                 {
                     if (o.Command.Equals("createTempFile"))
                     {
-                        BulkRenamer.CreateTempFile(o.DirectoryPath, o.TempFile);
+                        BulkRenamer.CreateTempFile(o.TempFile, o.DirectoryPath);
                     }
                     else if (o.Command.Equals("rename"))
                     {
@@ -44,14 +44,6 @@ namespace CSBulkRenamer
                     }
 
                 });
-
-         
-   
-
-            
-
-
-
 
         }
 
